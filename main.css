@@ -1,4 +1,9 @@
-.container {
+  body {
+    background-color: #455A64;
+    color: #FAFAFA;
+  }
+
+  .container {
     width: 500px;
     clear: both;
     margin-top: 25px;
@@ -9,7 +14,32 @@
     clear: both;
     margin-bottom: 5px;
   }
+  
+  .stock {
+    background-color: #B0BEC5;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    max-width: 300px; 
+    border-left: #B0BEC5 10px solid;
+    margin-bottom: 5px;
+  }
 
-  button {
+  .stock:hover{
+    border-left: #263238 10px solid;
+  }
+
+  #content {
+    margin: auto;
+    width: 75%;
+  }
+
+  #add-stock-button {
       margin-top: 5px;
+  }
+
+  .btn-xs {
+    float: right;
+    margin-top: 6px;
+    margin-right: 6px;
   }

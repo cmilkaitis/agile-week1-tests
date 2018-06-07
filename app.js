@@ -2,10 +2,10 @@ $(document).ready(() => {
 
     // List of added stocks, with the names of users who own them
     const stocks = [
-        {ticker: 'AMZN', price: 1696, ownedBy: ['gabriel', 'joe', 'chris', 'liz', 'gulia']},
-        {ticker: 'appl', price: 1696, ownedBy: ['gabriel', 'joe', 'connor']},
-        {ticker: 'micRO', price: 1696, ownedBy: ['gabriel', 'joe']},
-        {ticker: 'xrb', price: 1696, ownedBy: ['gabriel']}  
+        {ticker: 'AMZN', price: 1750, ownedBy: 'Joe'},
+        {ticker: 'appl', price: 1139, ownedBy: 'Gabriel'},
+        {ticker: 'micRO', price: 540, ownedBy: 'Chris'},
+        {ticker: 'xrb', price: 666, ownedBy: 'Liz'}  
     ];
 
     // Object constructor
@@ -59,14 +59,21 @@ $(document).ready(() => {
         $("#content").empty();
         array.forEach(stock => {
             $("#content").append(`
-                <div style="max-width: 300px; border-bottom: 1px black solid">
-                    <p>${stock.ticker}</p> 
-                    <p>$${stock.price}</p> 
+                <div class="stock">
+                    <button type="button" class="btn btn-danger btn-xs">x</button> 
+                    <h3>${stock.ticker}</h3> 
+                    <p>$${stock.price} USD</p> 
                     <p>Owned by: ${stock.ownedBy}</p>
                 </div>
             `);
         })
     }
+
+    //Delete a stock
+    $('#content').on('click', '.btn-xs', function(){
+        $(this).closest('.stock').remove();
+    });
+    
     
     upperCaseTicker(stocks);
     displayStocks(stocks);

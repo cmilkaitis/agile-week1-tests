@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Agile Week Project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Joe, scripts go here!!! -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 
@@ -13,16 +12,16 @@
 <body>
     <div id="wrapper" class="container"> <!-- non-body wrapper to contain all 3 sections -->
 
-        <div id=header> <!-- Logo, header, nav, searchbar etc -->
+        <div class="container" id=header> <!-- Logo, header, nav, searchbar etc -->
             <h1>Add a stock you own</h1>
             <form class="form-groupon">
-                <label>Enter Ticker: </label>
+                <label>Enter Ticker </label>
                 <input type="text" id="stock-input" placeholder="AMZN" value='' />
                 
-                <label>Enter Price: </label>
+                <label>Enter Price </label>
                 <input type="text" id="price-input" placeholder="$123" value='' />
                 
-                <label>Enter Name: </label>
+                <label>Enter Name </label>
                 <input type="text" id="name-input" placeholder="Jane Doe" value='' />
                 
                 <button class="btn btn-primary"type="button" id="add-stock-btn">Submit</button>
