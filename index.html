@@ -1,41 +1,48 @@
-<!DOCTYPE <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Agile Week Project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
 </head>
 <body>
-    <div id="wrapper" class="container"> <!-- non-body wrapper to contain all 3 sections -->
+    <div id="wrapper"> <!-- non-body wrapper to contain all 3 sections -->
 
-        <div class="container" id=header> <!-- Logo, header, nav, searchbar etc -->
-            <h1>Add a stock you own</h1>
-            <form class="form-groupon">
-                <label>Enter Ticker </label>
-                <input type="text" id="stock-input" placeholder="AMZN" value='' />
-                
-                <label>Enter Price </label>
-                <input type="text" id="price-input" placeholder="$123" value='' />
-                
-                <label>Enter Name </label>
-                <input type="text" id="name-input" placeholder="Jane Doe" value='' />
-                
-                <button class="btn btn-primary"type="button" id="add-stock-btn">Submit</button>
+        <div id=header> <!-- Logo, header, nav, searchbar etc -->
+            <form onsubmit="return false">
+                <input type="text" id="add-user-input" placeholder="Enter new user"/>
+                <button type="button" id="add-user-btn">Add User</button>
+                <select id="users-dropdown"></select>
+                <input type="text" id="stock-input" placeholder="Add a stock" />
+                <button type="button" id="add-stock-btn">Submit</button>
             </form>
         </div>
 
-        <div id="content" class="container">
-           
+        <div id="content">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Ticker</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Owner</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
         </div>
 
         <div id="footer"> <!-- Company info, copyright, etc -->
         </div>
     </div>  
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="app.js"></script>
 </body>
 </html> 

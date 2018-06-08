@@ -1,82 +1,140 @@
 $(document).ready(() => {
 
-    // List of added stocks, with the names of users who own them
-    const stocks = [
-        {ticker: 'AMZN', price: 1750, ownedBy: 'Joe'},
-        {ticker: 'appl', price: 1139, ownedBy: 'Gabriel'},
-        {ticker: 'micRO', price: 540, ownedBy: 'Chris'},
-        {ticker: 'xrb', price: 666, ownedBy: 'Liz'}  
-    ];
+    const stocks = {
+        XXXf: {ticker: 'XXXf', price: 1750, name: 'Chris'},
+        vvvf: {ticker: 'vvvf', price: 1139, name: 'Chris'},
+        rrrf: {ticker: 'rrrf', price: 540, name: 'Chris'},
+        qqqf: {ticker: 'qqqf', price: 666, name: 'Chris'},
+        ffff: {ticker: 'ffff', price: 666, name: 'Chris'}
+    };
 
-    // Object constructor
     class Stock {
-        constructor(ticker, price, ownedBy) {
+        constructor(ticker, price, name) {
             this.ticker = ticker;
             this.price = price;
-            this.ownedBy = ownedBy;
+            this.name = name;
         }
     }
 
     // Allows Enter key to submit
-    $('#name-input').keypress((event) => {
+    $('#stock-input').keypress((event) => {
         if(event.which == 13){
             event.preventDefault();
             $('#add-stock-btn').click();
         }
     });
 
-    // Gets form input, creates new stock object and pushes it to stocks array
-    $('#add-stock-btn').click(() => {
-            const tickerName = $('#stock-input').val();
-            const stockPrice = $('#price-input').val();
-            const ownersName = $('#name-input').val();
-        
-            let newStock = new Stock(tickerName, stockPrice, ownersName);
-            
-            stocks.push(newStock);
-            upperCaseTicker(stocks);
-            displayStocks(stocks);
+    
+    // ToolTip Function 
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
 
+    // Gets form input value, current user, and stock price from API, 
+    // saves as an object and pushes to the stock array
+    $('#add-stock-btn').click(() => {
+            const stockInput = $('#stock-input').val().toUpperCase();
+            function callAPI() {
+                var query = $('#stock-input').val();
+                var url = "https://api.iextrading.com/1.0/stock/" + query + "/batch?types=price";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: "jsonp",
+                    success: function(res) {
+                        let newStock = new Stock(stockInput, res.price, currentUser);
+                        stocks[stockInput] = newStock;
+                        displayStocks(stocks);
+                        console.log(stocks);
+                },
+                    error: function(err){
+                        console.log(err);
+                        alert("We don't recognize this ticker symbol, please check your input and try again");
+                    }
+                });
+            };
+            callAPI();
             $('#stock-input').val('');
-            $('#price-input').val('');
-            $('#name-input').val('');
-            
         }
     );
-
-    // Sets ticker value toUpperCase if the are not already
-    const upperCaseTicker = array => {
-        array.forEach(stock => {
-            if (stock.ticker !== stock.ticker.toUpperCase()) {
-                stock.ticker = stock.ticker.toUpperCase();
-            }   
-        });
-        return array;
-    }
-
-    // Displays Stock to the content div
-    const displayStocks = array => {
-        $("#content").empty();
-        array.forEach(stock => {
-            $("#content").append(`
-                <div class="stock">
-                    <button type="button" class="btn btn-danger btn-xs">x</button> 
-                    <h3>${stock.ticker}</h3> 
-                    <p>$${stock.price} USD</p> 
-                    <p>Owned by: ${stock.ownedBy}</p>
-                </div>
-            `);
-        })
-    }
-
-    //Delete a stock
-    $('#content').on('click', '.btn-xs', function(){
-        $(this).closest('.stock').remove();
+    
+/*     $(function() {
+    $('#stock-input').on("click",function() {
+        const text = $("stock-input").val();   //getting value of text input element
+        const item = $('<li/>')
+          .text(text)
+          .on("click",function() { $(this).remove()});
+        $("#content").prepend(li); 
     });
-    
-    
-    upperCaseTicker(stocks);
+}); */
+
+    // Displays Stock 
+    const displayStocks = obj => {
+        $("tbody").empty();
+        for(let key in stocks){
+            if (!stocks.hasOwnProperty(key)) continue;
+            let keyData = `<tr id=${key}>`;
+        
+            let obj = stocks[key];
+            for(let prop in obj) {
+                if (!obj.hasOwnProperty(prop)) continue;
+                 keyData += `<td>${obj[prop]}</td> `;
+            }
+            keyData += "</tr>";
+            $("tbody").append(keyData );
+        }
+        
+    };
+
     displayStocks(stocks);
+
+    const users = {};
+
+    let currentUser = null;
+    
+    const addUser = (userName) => {
+        let userNames = [];
+        Object.keys(users).forEach((user) => userNames.push(user));
+        if (userNames.includes(userName)) {
+            $('#users-dropdown')[0].options.selectedIndex = Array.from($('#users-dropdown')[0].options).map((item) => {
+                return item.value;
+            }).indexOf(userName);
+            currentUser = userName;
+            return;
+        }
+        users[userName] = {
+            name: userName,
+            stocks: {}
+        };
+        $('#users-dropdown').append("<option value='" + userName + "'>" + userName + "</option>");
+        currentUser = userName;
+        $('#users-dropdown')[0].options.selectedIndex = $('#users-dropdown')[0].options.length - 1;
+        console.log(currentUser);
+    };
+
+    $('#add-user-input').keypress((event) => {
+        if(event.which == 13){
+            event.preventDefault();
+            addUser(event.target.value);
+            $('#add-user-input')[0].value = "";
+        }
+    });
+
+    $('#add-user-btn').click((event) => {
+        event.preventDefault();
+        addUser($('#add-user-input').val());
+        $('#add-user-input')[0].value = "";
+    });
+
+    const selectUser = () => {
+        usersDropdown = $('#users-dropdown');
+        currentUser = usersDropdown[0].options[usersDropdown[0].options.selectedIndex].value;
+        console.log("current user: " + currentUser);
+    }
+
+    $('#users-dropdown').on('change', (event) => {
+        selectUser();
+    });
 
 });
 
